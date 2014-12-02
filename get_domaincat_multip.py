@@ -16,7 +16,9 @@ domain_categories_csv = 'domain_categories.csv'
 
 #Posts we are using for our analysis and modeling
 #posts_csv = '100PostPerSubreddit.csv'
-posts_csv = 'post.csv'
+#posts_csv = 'userliked_pipedelimited.csv'
+posts_csv = 'user_liked.csv'
+delimeter = '|'
 
 #given a url http://cnn.com/worldnews/storyoftheday
 #this method will strip out the http:// and /storyoftheday
@@ -63,6 +65,7 @@ def get_cat(domain):
         category = re.sub('\t+', '', category)
         category = re.sub('\</span\>', '', category)
         category = category.strip()
+        category = category.replace(","," ")
         return {'category': category, 'domain': domain}
     else:
       return {}
@@ -71,13 +74,12 @@ def get_cat(domain):
 if __name__ == '__main__':
 
 
-  postdf=pd.read_csv(posts_csv)
+  postdf=pd.read_csv(posts_csv,sep=delimeter)
   postdf.dropna(inplace=True)
   postdf['domain'] = postdf['url'].map(get_domain)
   print "Total domains: ",len(postdf['domain'].unique())
 
   domain_cat=pd.read_csv(domain_categories_csv)
-
   domains_we_have = domain_cat['domain'].values
   domains_from_posts = postdf['domain'].unique()
   domains_to_lookup = list(set(domains_from_posts) - set(domains_we_have))
@@ -95,4 +97,4 @@ if __name__ == '__main__':
 
   df = df.from_dict(result)
   domain_cat = domain_cat.append(df)
-  domain_cat.to_csv(domain_categories_csv, sep=',', encoding='utf-8',index=False)
+  domain_cat.to_csv(domain_categories_csv, sep=delimeter, encoding='utf-8',index=False)
