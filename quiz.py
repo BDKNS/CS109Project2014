@@ -19,7 +19,6 @@ import networkx as nx
 from matplotlib import pyplot as plt
 
 
-
 # Constants
 
 TRAIN_FRACTION = 0.7
