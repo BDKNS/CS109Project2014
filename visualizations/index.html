@@ -5,14 +5,43 @@
         <title>Visualizations</title>
         <script type="text/javascript" src="d3.js"></script>
     </head>
+
+    <style>
+     body {
+        font-family:"Lucida Grande","Droid Sans",Arial,Helvetica,sans-serif;
+    }
+    .legend {
+        border: 1px solid #555555;
+        border-radius: 5px 5px 5px 5px;
+        font-size: 0.9em;
+        margin: 10px;
+        padding: 8px;
+    }
+    </style>
+
+
     <body>
-      <font face="arial" size=4> <b>Data Visualizations</b>
+    <center>
+    <div style="width: 80%;">
+      <div class="legend">
+          <font face="arial" size="5"><b>Data Visualizations</b></font><br/>
+            <br/>The following charts and graphs visually present the datasets we have extracted from Reddit.
+            <br/><br/><a href="https://sites.google.com/a/college.harvard.edu/reddit-post-recommender/?pli=1">Return to Reddit Post Recommender Home Page</a><br/>
+        </div>
+    </div>
+    </center>  
+<br/>
 <ul>
-  <li><a href="Twenty.html">Twenty Most Popular Posts</a></li>
-  <li><a href="HighestScorePosts.html">100 Posts with Highest Reddit Scores</a></li>
-  <li><a href="MostComments.html">30 Posts with Highest Number of Comments</a></li>
-  <li><a href="barchart.html">Similarity between Posts</a></li>
+  <li><a href="tree.html">Tree Graph of Subreddit Category Names</a></li>
+   <li><a href="piechart.html">Distribution of Subreddits by Category, Subcategory, and Users [TO BE REPLACED BY INTERACTIVE VERSION BELOW]</a></li>
+  <li><a href="sequences/index.html">Distribution of Subreddits by Category, Subcategory, and Users [INTERACTIVE]</a></li>
+  <li><a href="barchart.html">Cosine Similarity between Recommended Posts to a Specific User</a></li>
   <li><a href="CommentsScores.html">Relationship between Number of Comments and Reddit Scores</a></li>
+  <li><a href="wordcloud.html">Word Cloud</a></li>
+  <br/>
+  <li><a href="HighestScorePosts.html">100 Posts with Highest Reddit Scores [TO BE RE-DONE USING DIFFERENT CHART]</a></li>
+  <li><a href="MostComments.html">30 Posts with Highest Number of Comments [TO BE REMOVED]</a></li>
+  <li><a href="Twenty.html">Twenty Most Popular Posts [TO BE REMOVED]</a></li>
 </ul>
 <font>
     </body>
