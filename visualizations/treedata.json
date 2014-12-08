@@ -1,0 +1,45 @@
+{
+ "name": "subreddit category",
+ "children": [
+  {
+   "name": "subcategory1",
+   "children": [
+    {
+     "name": "subsubcategory1",
+     "children": [
+      {"name": "aww", "size": 3938},
+      {"name": "science", "size": 3812},
+      {"name": "worldnews", "size": 6714},
+      {"name": "funny", "size": 743}
+     ]
+    },
+    {
+     "name": "subsubcategory2",
+     "children": [
+      {"name": "blahblah", "size": 7074}
+     ]
+    }
+   ]
+  }, 
+  {
+   "name": "subcategory2",
+  "children": [
+    {
+     "name": "subsubcategory1",
+     "children": [
+      {"name": "aww", "size": 3938},
+      {"name": "science", "size": 3812},
+      {"name": "worldnews", "size": 6714},
+      {"name": "funny", "size": 743}
+     ]
+    },
+    {
+     "name": "subsubcategory2",
+     "children": [
+      {"name": "blahblah", "size": 7074}
+     ]
+    }
+   ]
+  }
+ ]
+}
