@@ -1,4 +1,9 @@
 success, failure
+
+w_post_hist = 1
+w_liked_hist = 0.5
+w_category = 1
+w_default = 0.1
 45 35
 64 46
 114 83
@@ -25,9 +30,22 @@ success, failure
 1352 1407
 1369 1414
 
+w_post_hist = 0
+w_liked_hist = 0
+w_category = 0
+w_default = 1
+8159 43154
 
+w_post_hist = 1
+w_liked_hist = 0.5
+w_category = 0
+w_default = 0.1
+27349 23964
 
+--------------------------------------------------------
 Note: above is for training data ^^^
+Below is for test data
+--------------------------------------------------------
 
 TEST DATA:
 
