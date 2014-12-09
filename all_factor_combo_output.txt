@@ -30,7 +30,21 @@ success, failure
 Note: above is for training data ^^^
 
 TEST DATA:
-All factors except category:
+
+w_post_hist = 1
+w_liked_hist = 0.5
+w_category = 0
+w_default = 0.1
 8866 7947
 
-Only default:
+w_post_hist = 0
+w_liked_hist = 0
+w_category = 0
+w_default = 1
+2606 14207
+
+
+
+
+
+
