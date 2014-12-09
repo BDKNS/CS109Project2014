@@ -23,4 +23,14 @@ success, failure
 1301 1302
 1339 1387
 1352 1407
-1369
+1369 1414
+
+
+
+Note: above is for training data ^^^
+
+TEST DATA:
+All factors except category:
+8866 7947
+
+Only default:
