@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author Dario
  */
-public class Program {
+public class DataCollector {
     
     public static final String S3_BUCKET = "cs109-team-project";
     public static final String S3_KEY_POSTFIX = "_collectorConfig.properties";
@@ -53,7 +53,7 @@ public class Program {
                     objectData.close();             
                     Files.copy(objectData, Paths.get(fileName));
                 } catch (IOException ex) {
-                    Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DataCollector.class.getName()).log(Level.SEVERE, null, ex);
                 }                
                 config = new CollectorConfiguration(fileName);
             }            
@@ -74,12 +74,7 @@ public class Program {
         configM = config;
         
         if (config.getCollectSubreddits()){
-            if (config.getCollectSubredditPosts()){
-                DynamoConnector.harvestSubreddits(1000, dmapper, Boolean.TRUE); 
-            }
-            else{
-                DynamoConnector.harvestSubreddits(1000, dmapper, Boolean.FALSE); 
-            }
+            DynamoConnector.harvestSubreddits(1000, dmapper, config.getCollectSubredditPosts()); 
         }
         
         if (config.getCollectPostsFromFile()){
