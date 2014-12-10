@@ -12,26 +12,32 @@ import com.cs109.reddit2awsvortex.data.model.UserSubmitted;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.Writer;
 import java.util.Scanner;
 import java.util.UUID;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
- *
+ * DynamoConnect class hosts a number of methods focusing on the collection and processing 
+ * of Reddit data. Most functions interact with Reddit via the public REST API and retrieve
+ * data in JSON format. Retrieved JSON data is then parsed and mapped to Java class objects
+ * representing data model entities. Integration with Amazon AWS services is achieved through the 
+ * AWS Java SDK and Entities are annotated with Amazon AWS DynamoDB properties allowing them to be 
+ * persisted defined DynamoDB tables. From this Nosql database the Reddit data can then be piped to 
+ * other services such as Elastic MapReduce, have aggregation queries run against it, or be exported to 
+ * various formats.
  * @author Dario
  */
 public class DynamoConnector {   
     
     /***
-     * 
+     * Collects metadata for the most popular Subreddits, up to a parameter defined limit. Depending on parameters, may optionally
+     * collect Posts for encountered Subreddits as well.
      * @param subredditLimit
      * @param dmapper 
+     * @param collectSubredditPosts 
      */
     public static void harvestSubreddits(Integer subredditLimit, DynamoDBMapper dmapper, Boolean collectSubredditPosts){
         try {
