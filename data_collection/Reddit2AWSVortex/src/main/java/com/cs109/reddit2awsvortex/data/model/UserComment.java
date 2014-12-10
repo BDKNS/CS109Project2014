@@ -22,8 +22,7 @@ public class UserComment {
     private String permalink;
     private Float published_date;
 
-    public UserComment() {
-    }
+    public UserComment() {}
 
     public String getId() {
         return id;

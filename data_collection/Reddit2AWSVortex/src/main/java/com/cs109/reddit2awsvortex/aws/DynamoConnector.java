@@ -93,7 +93,7 @@ public class DynamoConnector {
                         // Save the subreddit to DynamoDB
                         //dmapper.save(subReddit); 
                         if (!subReddit.getDisplay_name().equalsIgnoreCase("ads") && !subReddit.getDisplay_name().equalsIgnoreCase("promos")) {
-                            DynamoConnector.harvestCommentsBySubreddit(subReddit.getDisplay_name(), dmapper);
+                            DynamoConnector.harvestSubredditPosts(subReddit.getDisplay_name(), dmapper);
                         }
                         csvOutput = new BufferedWriter(new FileWriter("subreddit.csv", true));
                         csvOutput.append(subReddit.toCSV());
@@ -107,7 +107,7 @@ public class DynamoConnector {
         }        
     }    
     
-    public static void harvestCommentsBySubreddit(String subreddit, DynamoDBMapper dmapper){
+    public static void harvestSubredditPosts(String subreddit, DynamoDBMapper dmapper){
         
         try {
             Client client = Client.create();
