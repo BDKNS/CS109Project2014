@@ -4,7 +4,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 /**
- *
+ * Comment entity representing data collected from Reddit comments JSON via 
+ * REST API. Class is annotated with DynamoDB Mapper flags for persistence to
+ * AWS DynamoDB.
  * @author Dario
  */
 @DynamoDBTable(tableName="comment") 

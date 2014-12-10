@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- *
+ * The CollectorConfiguration constructor takes a .properties file as a parameter
+ * and as part of its init() method reads in this file and sets a series of member fields
+ * which are then used to govern the behavior of the DataCollector program. These class fields 
+ * specify logic that collects Reddit subreddit, post, comment, and user data.
  * @author Dario
  */
 public class CollectorConfiguration {
@@ -25,14 +28,19 @@ public class CollectorConfiguration {
     
     private Boolean processCommentsExport = Boolean.FALSE;
 
-    CollectorConfiguration(String fitProps) {
-        this.CONFIG_PROPS = fitProps;
+    CollectorConfiguration(String configProps) {
+        this.CONFIG_PROPS = configProps;
     }
 
     public void init() {
         readConfigProps();
     }
 
+    /***
+     * readConfigProps() initiates the reading in of a specified .properties file
+     * using the Java Util package property reader and stores the values in class level
+     * variables, made available for elsewhere in the program by accessor methods.
+     */
     private void readConfigProps() {
         Properties prop = new Properties();
 
