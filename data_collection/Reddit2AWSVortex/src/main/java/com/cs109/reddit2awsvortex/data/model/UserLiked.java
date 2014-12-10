@@ -30,26 +30,7 @@ public class UserLiked {
     private String url;
     private String permalink;
 
-    public UserLiked() {
-    }
-
-    public UserLiked(String id, String title, String subreddit_title, String subreddit_id, Boolean self_post, Integer num_comments, Integer score, String text_content, Integer gilded, Float published_date, Boolean edited, Boolean mature, String user_id, String url, String permalink) {
-        this.id = id;
-        this.title = title;
-        this.subreddit_title = subreddit_title;
-        this.subreddit_id = subreddit_id;
-        this.self_post = self_post;
-        this.num_comments = num_comments;
-        this.score = score;
-        this.text_content = text_content;
-        this.gilded = gilded;
-        this.published_date = published_date;
-        this.edited = edited;
-        this.mature = mature;
-        this.author = user_id;
-        this.url = url;
-        this.permalink = permalink;
-    }
+    public UserLiked() {}
 
     public String getId() {
         return id;
