@@ -5,7 +5,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../common/delimited-favicon-v4.ico">
-    <title>Distribution of Subreddits by Category, Subcategory, and Users</title>
+    <title>Distribution of subreddits by category and number of posts in that subreddit under that category</title>
+
+    <style>
+      body {
+        font-family:"Lucida Grande","Droid Sans",Arial,Helvetica,sans-serif;
+        position: relative;
+        width: 960px;
+      }
+
+      .legend {
+            border: 1px solid #555555;
+            border-radius: 5px 5px 5px 5px;
+            font-size: 0.8em;
+            margin: 10px;
+            padding: 8px;
+        }
+    </style>
+
     <script type="text/javascript" src="lib/d3.js"></script>
     <script type="text/javascript" src="lib/underscore-min.js"></script>
     <script type="text/javascript">
@@ -20,14 +37,21 @@
     })();
     </script>
   </head>
+
   <body>
-    <center><font face="arial" size="4"><b>Distribution of Subreddits by Category, Subcategory, and Users</b></font><br/>
-    <font face="arial" size="2">
-      <b>Inner circle:</b> subreddit category             
-      <b>Middle Circle:</b> subcategory (e.g. 'aww')               
-      <b>Outer Circle:</b> number of users who voted in that subcategory               
-      <br/>(.csv file is in this format:  category,subcategory,users)
-    </font></center>
+   <center>
+    <div style="width: 80%;">
+      <div class="legend">
+          <font face="arial" size="4">Subreddits by category and number of posts in that subreddit under that category</b></font><br/>
+          <p align="left">
+          <b>Inner circle:</b> subreddit (e.g. 'aww', 'pics', 'funny', 'gifs')<br/>             
+          <b>Middle Circle:</b> category in which the subreddit has posts (as determined by <a href="https://www.opendns.com" target="_blank">Open DNS</a>)<br/>              
+          <b>Outer Circle:</b> number of posts found to be in that category (as determined by <a href="https://www.opendns.com" target="_blank">Open DNS</a>)</p>
+          <center><a href="https://sites.google.com/a/college.harvard.edu/reddit-post-recommender/?pli=1">Reddit Post Recommender Home</a>  |  <a href="http://cs109-team-site.s3-website-us-west-2.amazonaws.com/">Visualization Home</a>   |   <a href="https://github.com/BDKNS/CS109Project2014/raw/master/visualizations/sunburstdata.csv">Data for this visualization</a>
+      </div>
+    </div>
+    </center>  
+
     <script>
       //*************************************************
       // SETUP DATA VIZ
@@ -45,7 +69,7 @@
       var partition = d3.layout.partition()
         .sort(null)
         .size([2 * Math.PI, radius * radius])
-        .value(function(d) { return d.users; });
+        .value(function(d) { return d.numposts; });
 
       var arc = d3.svg.arc()
         .startAngle(function(d) { return d.x; })
@@ -97,7 +121,7 @@
         //*************************************************
         // CALL THE FUNCTION
         //*************************************************
-        var preppedData = genJSON(data, ['category', 'subcategory'])
+        var preppedData = genJSON(data, ['subreddit', 'category'])
 
         //*************************************************
         // LOAD THE PREPPED DATA IN D3
