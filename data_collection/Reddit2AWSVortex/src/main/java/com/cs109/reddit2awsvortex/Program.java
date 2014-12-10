@@ -74,17 +74,17 @@ public class Program {
         configM = config;
         
         if (config.getCollectSubreddits()){
-            DynamoConnector.harvestSubreddits(1000, dmapper);            
-        }
-        
-        // TODO refactor
-        if (config.getCollectSubredditPosts()){
-            DynamoConnector.harvestSubredditPosts(S3_BUCKET, dmapper);
+            if (config.getCollectSubredditPosts()){
+                DynamoConnector.harvestSubreddits(1000, dmapper, Boolean.TRUE); 
+            }
+            else{
+                DynamoConnector.harvestSubreddits(1000, dmapper, Boolean.FALSE); 
+            }
         }
         
         if (config.getCollectPostsFromFile()){
             File postCSV = new File("post.csv");        
-            DynamoConnector.harvestPostsFromFile(postCSV, dmapper);             
+            DynamoConnector.processPosts(postCSV, dmapper, 1);             
         }       
         
         if (config.getCollectUser()){

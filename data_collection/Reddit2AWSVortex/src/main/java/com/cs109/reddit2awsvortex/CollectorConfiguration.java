@@ -30,10 +30,10 @@ public class CollectorConfiguration {
     }
 
     public void init() {
-        readFitnesseProps();
+        readConfigProps();
     }
 
-    private void readFitnesseProps() {
+    private void readConfigProps() {
         Properties prop = new Properties();
 
         try {
