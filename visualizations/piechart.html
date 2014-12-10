@@ -21,9 +21,23 @@
             margin: 10px;
             padding: 8px;
         }
+
+      /* HOVER STYLES */
+      div#pop-up {
+        display: none;
+        position: absolute;
+        width: 280px;
+        padding: 10px;
+        background: #FFFFFF;
+        color: #000000;
+        border: 1px solid #1a1a1a;
+        font-size: 1em;
+      }
+          
     </style>
 
     <script type="text/javascript" src="lib/d3.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
     <script type="text/javascript" src="lib/underscore-min.js"></script>
     <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -36,6 +50,30 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     </script>
+
+    <!-- JQuery code credit:  http://creativeindividual.co.uk/2011/02/create-a-pop-up-div-in-jquery/ -->
+    <script type="text/javascript">
+      $(function() {
+        var moveLeft = 20;
+        var moveDown = 10;
+        
+        $('a#trigger').hover(function(e) {
+          $('div#pop-up').show();
+          //.css('top', e.pageY + moveDown)
+          //.css('left', e.pageX + moveLeft)
+          //.appendTo('body');
+        }, function() {
+          $('div#pop-up').hide();
+        });
+        
+        $('a#trigger').mousemove(function(e) {
+          $("div#pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+        });
+        
+      });
+    </script>
+
+
   </head>
 
   <body>
@@ -43,14 +81,23 @@
     <div style="width: 80%;">
       <div class="legend">
           <font face="arial" size="4">Subreddits by category and number of posts in that subreddit under that category</b></font><br/>
-          <p align="left">
-          <b>Inner circle:</b> subreddit (e.g. 'aww', 'pics', 'funny', 'gifs')<br/>             
-          <b>Middle Circle:</b> category in which the subreddit has posts (as determined by <a href="https://www.opendns.com" target="_blank">Open DNS</a>)<br/>              
+          <p align="left">                     
+          <b>Inner Circle:</b> category in which the subreddit has posts (as determined by <a href="https://www.opendns.com" target="_blank">Open DNS</a>)<br/>              
+          <b>Middle circle:</b> subreddit (e.g. 'aww', 'pics', 'funny', 'gifs')<br/>  
           <b>Outer Circle:</b> number of posts found to be in that category (as determined by <a href="https://www.opendns.com" target="_blank">Open DNS</a>)</p>
-          <center><a href="https://sites.google.com/a/college.harvard.edu/reddit-post-recommender/?pli=1">Reddit Post Recommender Home</a>  |  <a href="http://cs109-team-site.s3-website-us-west-2.amazonaws.com/">Visualization Home</a>   |   <a href="https://github.com/BDKNS/CS109Project2014/raw/master/visualizations/sunburstdata.csv">Data for this visualization</a>
+          <center><a href="https://sites.google.com/a/college.harvard.edu/reddit-post-recommender/?pli=1">Reddit Post Recommender Home</a>  |  <a href="http://cs109-team-site.s3-website-us-west-2.amazonaws.com/">Visualization Home</a>   |   <a href="https://github.com/BDKNS/CS109Project2014/raw/master/visualizations/sunburstdata.csv">Data for this visualization</a>    |    <a href="#" id="trigger">About this visualization</a>
+
+    </center>       
+          <div id="pop-up">
+            <h3>Dynamic Pie Chart</h3>
+            <p align="left">
+              This pie chart shows subreddits by category.  The category of a post in a subreddit is determined via a look up on Open DNS.  Viewing the data for this visualization allows us to understand that "Classifieds/Photo Sharing  Photo Sharing" is the largest category for most posts in every subreddit.  Notice that the outer circle is the same size as the middle circle.  This makes sense since every post (outer circle) is listed under a subreddit (middle circle), and every subreddit (inner circle) has at least one category (inner circle). 
+            </p>
+          </div>
+
       </div>
     </div>
-    </center>  
+  
 
     <script>
       //*************************************************
@@ -83,7 +130,7 @@
       d3.csv("sunburstdata.csv", function(error, data) {
 
         _.each(data, function(element, index, list){
-            element.users = +element.users;
+            element.numposts = +element.numposts;
         });
 
         //*************************************************
@@ -121,7 +168,7 @@
         //*************************************************
         // CALL THE FUNCTION
         //*************************************************
-        var preppedData = genJSON(data, ['subreddit', 'category'])
+        var preppedData = genJSON(data, ['category', 'subreddit'])
 
         //*************************************************
         // LOAD THE PREPPED DATA IN D3
