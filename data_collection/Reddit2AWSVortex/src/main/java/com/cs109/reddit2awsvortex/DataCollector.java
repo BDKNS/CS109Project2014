@@ -18,7 +18,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * DataCollector is typically initiated by a shell script (acquire_deploy.sh). The shell script downloads a ZIP package
+ * containing the DataCollector JAR file and requisite files. The script calls the JAR with certain command line 
+ * arguments that determine whether the Collector will download a configuration file from AWS S3, use a custom file locally
+ * supplied, or rever to a default one. The configuration determines what types of data the program execution will collect and process.
+ * 
+ * The intention beyond this design is that due to Reddit's metered (request / 2 seconds) API access from a single IP address
+ * executing a multithreaded program from a single machine was not optimal, rather it was more desirable to provision a cluster of 
+ * machine instances (AWS EC2) in the cloud and have them all rely on the same program, but make the program configuration dynamic and hosted
+ * in the cloud such that the machines could work in concert on different pieces of the same Big Data puzzle.
+ * 
+ * DataCollector harvests JSON data from Reddit using its public REST API, stores the data in AWS DynamoDB NoSql database for further 
+ * processing and analysis. It also reads in data files in various formats for data upload or transformation (ie: CSV export).
  * @author Dario
  */
 public class DataCollector {
@@ -33,7 +44,7 @@ public class DataCollector {
     public static void main(String[] args) {        
         
         // AWS Credentials, requiring IAM Role with S3 & Dynamo Access
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJUC3SGEQYGLT7ZZA", "vYMWq6G5/YWlXB/oPBe4uUBcl7zZP+mTO5hAUjEd");
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("accesskey", "secretkey");
         
         // Create AWS clients for S3 and DynamoDB services.
         AmazonS3 s3Client = new AmazonS3Client(awsCreds);
@@ -73,15 +84,18 @@ public class DataCollector {
         config.init();
         configM = config;
         
+        // Collect Subreddits and their associated Posts
         if (config.getCollectSubreddits()){
             DynamoConnector.harvestSubreddits(1000, dmapper, config.getCollectSubredditPosts()); 
         }
         
+        // Process Posts from supplied CSV file and associted Comments
         if (config.getCollectPostsFromFile()){
             File postCSV = new File("post.csv");        
             DynamoConnector.processPosts(postCSV, dmapper, 1);             
         }       
         
+        // Collect User data, which may include account metadata, posts, comments, likes, and dislikes
         if (config.getCollectUser()){
             File userList = new File("good_users_long.txt");        
             DynamoConnector.processUsers(userList, 
@@ -92,6 +106,8 @@ public class DataCollector {
                     config.getCollectUserLikes(), 
                     config.getCollectUserDislikes());
         }
+        
+        // Process DynamoDB export file of 'comments' table data, generating a CSV file from it.
         if (config.getProcessCommentsExport()){
             DynamoExportParser.parseCommentsExport();
         }
