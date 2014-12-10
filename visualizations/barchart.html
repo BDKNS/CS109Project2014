@@ -5,13 +5,13 @@
 <style>
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family:"Lucida Grande","Droid Sans",Arial,Helvetica,sans-serif;
   position: relative;
   width: 960px;
 }
 
 .axis text {
-  font: 10px sans-serif;
+  font: 12px sans-serif;
 }
 
 .axis path,
@@ -30,31 +30,35 @@ body {
   display: none;
 }
 
-label {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
+.legend {
+      border: 1px solid #555555;
+      border-radius: 5px 5px 5px 5px;
+      font-size: 0.8em;
+      margin: 10px;
+      padding: 8px;
+  }
 
 </style>
 
 
 <body>
-<center>
-  <b>Cosine Similarity Score for the Highest Scoring Post</b>
-<br/><br/>
- <font face="arial" size=2>We could use this to show an example of the top 10 most similar posts found.
-<br/>The first post has of course, 100% similarity, because it is itself.<br/>
-The following posts are the most similar posts.  Similarity scores can be based on whether the user voted on a post (binary vectors) <br/>or text features of the post (using TF-IDF values).<br/> Click on <b>Sort values</b> to quickly see the sorted values.<br/></font>
+    <center>
+    <div style="width: 80%;">
+      <div class="legend">
+          <font face="arial" size="4"><b>Similarity between Subreddits</b></font><br/>
+          <p align="left">This bar chart shows the similarity between randomly chosen subreddits to the subreddit 'news'.  <br/>Similarity is calculated by pearson correlation (<a href="#screen">scroll down</a>) using the percentage of posts in each category for each subreddit as the value for calculation.  The category of each post is determined by looking up <a href="https://www.opendns.com" target="_blank">Open DNS</a>.  We count the number of posts in each category and use the percentage of posts from each category to calculate the pearson correlation score, which determines whether one subreddit is similar to another subreddit.</p>
+          <center><a href="https://sites.google.com/a/college.harvard.edu/reddit-post-recommender/?pli=1">Return to Reddit Post Recommender Home Page</a>      
+          <input type="checkbox"> Sort values</input></center><br/>
+        </div>
+    </div>
+    </center>  
 
-</center>
-
-<label><input type="checkbox"> Sort values</label>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
 <script>
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
+var margin = {top: 20, right: 20, bottom: 90, left: 50},
+    width = 1000- margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 var formatPercent = d3.format(".0%");
@@ -80,7 +84,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.tsv("barchartdata10.tsv", function(error, data) {
+d3.tsv("barchartdata.tsv", function(error, data) {
 
   data.forEach(function(d) {
     d.similarity = +d.similarity;
@@ -89,18 +93,27 @@ d3.tsv("barchartdata10.tsv", function(error, data) {
   x.domain(data.map(function(d) { return d.post; }));
   y.domain([0, d3.max(data, function(d) { return d.similarity; })]);
 
+
+// credit to http://www.d3noob.org/2013/01/how-to-rotate-text-labels-for-x-axis-of.html
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll("text")  
+      .style("text-anchor", "end")
+      .attr("dx", "-.5em")
+      .attr("dy", ".15em")
+      .attr("transform", function(d) {
+         return "rotate(-45)" 
+       });
 
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
+      .attr("y", 7)
+      .attr("dy", "1em")
       .style("text-anchor", "end")
       .text("similarity");
 
@@ -113,13 +126,14 @@ d3.tsv("barchartdata10.tsv", function(error, data) {
       .attr("y", function(d) { return y(d.similarity); })
       .attr("height", function(d) { return height - y(d.similarity); });
 
+
   d3.select("input").on("change", change);
 
   var sortTimeout = setTimeout(function() {
-    d3.select("input").property("checked", true).each(change);
+    d3.select("input").property("checked", false).each(change);
   }, 2000);
-
   function change() {
+
     clearTimeout(sortTimeout);
 
     // Copy-on-write since tweens are evaluated after a delay.
@@ -135,15 +149,22 @@ d3.tsv("barchartdata10.tsv", function(error, data) {
     transition.selectAll(".bar")
         .delay(delay)
         .attr("x", function(d) { return x0(d.post); });
-
+        
+      
     transition.select(".x.axis")
-        .call(xAxis)
-      .selectAll("g")
-        .delay(delay);
+      .call(xAxis)
+      .selectAll("text")  
+      .style("text-anchor", "end")
+      .attr("dx", "-.5em")
+      .attr("dy", ".15em")
+      .attr("transform", function(d) {
+         return "rotate(-45)" 
+       });
+
   }
 });
 
 </script>
-
+<br/><a name="screen"><img src="similarityscreenshot.jpg"/></a><br/><br/><br/><br/>
 </body>
 </html>
