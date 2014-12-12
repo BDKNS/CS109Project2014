@@ -4,7 +4,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 /**
- *
+ * Subreddit entity representing data collected from Reddit subreddit JSON via 
+ * REST API. Class is annotated with DynamoDB Mapper flags for persistence to
+ * AWS DynamoDB.
  * @author Dario
  */
 @DynamoDBTable(tableName="subreddit") 

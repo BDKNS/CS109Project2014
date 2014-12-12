@@ -15,16 +15,20 @@ import java.util.logging.Logger;
  *
  * @author Dario
  */
-public class DynamoExportParser {
+public class DynamoExportParser {    
     
-    
+    /***
+     * Method to process a DynamoDB Export of 'Comments' table data. DynamoDB uses the AWS DataPipeline service as its export facility and 
+     * outputted data is stored in a proprietary schema: http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-importexport-ddb-pipelinejson-verifydata2.html
+     * This function reads an export file and produces a CSV from it.
+     */
     public static void parseCommentsExport(){
         
         try {
-            Writer csvOutput = new BufferedWriter(new FileWriter("MEGAOUT.csv", false));
+            Writer csvOutput = new BufferedWriter(new FileWriter("comments_pipedelimited.csv", false));
             csvOutput.append("id | parent_id | comment_text | score | karma | gilded | user_id | subreddit_id | permalink | published_date" + "\n"); 
             BufferedReader br = new BufferedReader(new FileReader("commentsP1.txt"));
-            String line = "";
+            String line;
             int postIndex = 1;
             while ((line = br.readLine()) != null) {
                 //System.out.println("\n*** Processing Line \n" + line + "\n @ INDEX=" + postIndex);
@@ -53,7 +57,6 @@ public class DynamoExportParser {
 
             br = new BufferedReader(new FileReader("commentsP2.txt"));
             while ((line = br.readLine()) != null) {
-            // do something
                 //System.out.println("\n*** Processing Line \n" + line + "\n @ INDEX=" + postIndex);
 
                 // Split on STX 
@@ -84,8 +87,15 @@ public class DynamoExportParser {
         }
     }
     
-    public static Comment mapField(String field, String value, Comment comment){
-        
+    /***
+     * Takes a field name, a field value, and a Comment object. Sets the appropriate field of Comment
+     * with the supplied value based on the passed in field name. Helper function to parseCommentsExport()
+     * @param field
+     * @param value
+     * @param comment
+     * @return 
+     */
+    public static Comment mapField(String field, String value, Comment comment){        
         switch (field) {
             case "id":
                 comment.setId(value);
@@ -123,6 +133,12 @@ public class DynamoExportParser {
         return comment;
     }
     
+    /***
+     * Helper function to clean DynamoDB's export schema packaging from supplied field value.
+     * @param field
+     * @param val
+     * @return 
+     */
     public static String cleanVal(String field, String val){
         val = val.substring(3);        
         //val = val.replaceAll("\n", "");

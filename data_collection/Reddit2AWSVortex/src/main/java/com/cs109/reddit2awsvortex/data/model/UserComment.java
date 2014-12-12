@@ -4,7 +4,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 /**
- *
+ * Comment entity representing data collected from Reddit Comment JSON via 
+ * REST API. These are comments that were made by our studied subset of 
+ * users. Class is annotated with DynamoDB Mapper flags for persistence to
+ * AWS DynamoDB.
  * @author Dario
  */
 @DynamoDBTable(tableName = "usercomment")
@@ -22,8 +25,7 @@ public class UserComment {
     private String permalink;
     private Float published_date;
 
-    public UserComment() {
-    }
+    public UserComment() {}
 
     public String getId() {
         return id;
