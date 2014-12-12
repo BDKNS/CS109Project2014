@@ -42,6 +42,31 @@ w_category = 0
 w_default = 0.1
 27349 23964
 
+w_post_hist = 1
+w_liked_hist = 0.5
+w_category = 0
+w_default = 0
+26415 24898
+
+w_post_hist = 1
+w_liked_hist = 1
+w_category = 0
+w_default = 1
+26667 24646
+
+w_post_hist = 1
+w_liked_hist = 1
+w_category = 0
+w_default = 0.1
+27349 23964
+
+w_post_hist = 1
+w_liked_hist = 1
+w_category = 0
+w_default = 0
+26414 24899
+
+
 --------------------------------------------------------
 Note: above is for training data ^^^
 Below is for test data
