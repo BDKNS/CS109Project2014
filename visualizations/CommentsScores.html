@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Relationship between Number of Comments and Score</title>
+    <title>Relationship between Number of Comments and Score (Line Graph)</title>
 
 	<style>
 		body {
@@ -17,8 +17,42 @@
 	            margin: 10px;
 	            padding: 8px;
 	     }
+
+	    div#pop-up {
+        display: none;
+        position: absolute;
+        width: 280px;
+        padding: 10px;
+        background: #FFFFFF;
+        color: #000000;
+        border: 1px solid #1a1a1a;
+        font-size: 1em;
+      }
 	</style>
 
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+
+	<!-- JQuery code credit:  http://creativeindividual.co.uk/2011/02/create-a-pop-up-div-in-jquery/ -->
+    <script type="text/javascript">
+      $(function() {
+        var moveLeft = 20;
+        var moveDown = 10;
+        
+        $('a#trigger').hover(function(e) {
+          $('div#pop-up').show();
+          //.css('top', e.pageY + moveDown)
+          //.css('left', e.pageX + moveLeft)
+          //.appendTo('body');
+        }, function() {
+          $('div#pop-up').hide();
+        });
+        
+        $('a#trigger').mousemove(function(e) {
+          $("div#pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+        });
+        
+      });
+    </script>
 
 </head>
 
@@ -26,17 +60,32 @@
 <body>
 <center>
     <div style="width: 80%;">
-      <div class="legend">
-          <font face="arial" size="4">Relationship between Number of Comments and Scores</b></font><br/>
-        <p align="left">This horizontal line graph shows an inverse relationship between the number of comments of a subreddit and its <a href="http://www.reddit.com/wiki/faq#wiki_how_is_a_submission.27s_score_determined.3F">score</a>.</p>
-       <center>
-        <a href="https://sites.google.com/a/college.harvard.edu/reddit-post-recommender/?pli=1">Reddit Post Recommender Home</a>  |  
-        <a href="http://cs109-team-site.s3-website-us-west-2.amazonaws.com/">Visualization Home</a>   |         
-        <a href="https://github.com/BDKNS/CS109Project2014/raw/master/visualizations/MostComments.csv">Data for this visualization</a>              
-    </div>
-</div>
-</center>  
+      	<div class="legend">
+	        <font face="arial" size="4"><b>Relationship between Number of Comments and Scores</b></font><br/>
+	        <p align="left">This horizontal line graph shows an inverse relationship between the number of comments of a post and its <a href="http://www.reddit.com/wiki/faq#wiki_how_is_a_submission.27s_score_determined.3F">reddit score</a>.</p>
+	        <center>
+	        <a href="https://sites.google.com/site/redditsubredditrecommender/home">Reddit Subreddit Recommender Home</a>  |  
+	        <a href="http://cs109-team-site.s3-website-us-west-2.amazonaws.com/">Visualization Home</a>   |         
+	        <a href="https://github.com/BDKNS/CS109Project2014/raw/master/visualizations/MostComments.csv">Data for This Visualization</a>    |
+	        <a href="#" id="trigger">About This Visualization</a> <br/>
+	        <a href="https://s3-us-west-1.amazonaws.com/cs109-team-proj/data/csv/comments_pipedelimited.csv">Complete Data [download 272MB]</a>
+	     
+    
+			<div id="pop-up">
+		        <h3>Line Graph</h3>
+		        <p align="left">
+		        <b>Process</b><br/>
+		        After we pulled about 272 MB of comments (around 800,000 lines!) from the highest scoring posts, we wanted to see if there was a correlation between the number of comments in its reddit score.   <br/>
 
+		        <br/>We took the posts with the most number of comments from our data set and constructed a subset of data to construct this visualization.
+		        <br/><br/>
+		        What have we learned?  Interestingly, we see from the visualization that the number of comments of a post seems to be inversely proportional to its score.  
+		        <br/><br/>
+		        We make sense of this by hypothesizing that perhaps the most controversial posts attracted the most number of comments from reddit users, but that these users mostly do not like whatever was posted in the content of the post.  To take a closer look, we looked at the images of some of these posts and noticed that some are indeed controversial.<br/><br/></p>
+			</div>
+		</div>
+	</div>
+</center>  
 
 <br/>
 

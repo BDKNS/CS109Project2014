@@ -5,7 +5,8 @@ and https://github.com/jasondavies/d3-cloud -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="lib/d3.layout.cloud.js"></script>
 <head>
-    <title>Word Cloud</title>
+    <title>Words from reddit comments (Word Cloud)</title>
+    <META HTTP-EQUIV="refresh" CONTENT="2">
 </head>
 <style>
     body {
@@ -27,20 +28,21 @@ and https://github.com/jasondavies/d3-cloud -->
 <div style="width: 80%;">
   <div class="legend">
       <font face="arial" size="4"><b>Word Cloud</b></font><br/>
-        This word cloud shows the words which appear with highest frequency in comments from the highest scoring subreddits.
+        This word cloud shows the words which appear with highest frequency in comments from the highest scoring posts.
+        <br/>This page refreshes every 2 seconds to generate a new cloud.
+        <br/><br/>
+        <a href="https://sites.google.com/site/redditsubredditrecommender/home">Reddit Subreddit Recommender Home</a>  
+    <a href="http://cs109-team-site.s3-website-us-west-2.amazonaws.com/">Visualization Home</a>
     </div>
-</div>
-</center>  
+    
+ </center>
+
 
 <script>
   var fill = d3.scale.category20();
   d3.layout.cloud().size([1000, 600])
       .words([
-        "Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this"].map(function(d) {
+        "Sending" ,"you" ,"hugs" ,"Lost", "my" ,"little", "boy", "to" ,"lung" ,"cancer" ,"this", "Summer" ,"It" ,"does" ,"get" ,"betterand" ,"I" ,"console" ,"myself" ,"by" ,"knowing", "that" ,"I" ,"gave" ,"him" ,"a", "happy", "safe", "loving" ,"home", "for", "11", "years", "and" ,"that" ,"he", "gave" ,"me" ,"an", "incredible", "amount" ,"of" ,"love" ,"Your" ,"little" ,"girl", "looks", "as", "if" ,"she" ,"got" ,"tons", "of" ,"love"].map(function(d) {
         return {text: d, size: 10 + Math.random() * 90};
       }))
       .padding(5)
@@ -68,5 +70,6 @@ and https://github.com/jasondavies/d3-cloud -->
         .text(function(d) { return d.text; });
   }
 </script>
+</div>
 </body>
 </html>
